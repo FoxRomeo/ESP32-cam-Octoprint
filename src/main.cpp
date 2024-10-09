@@ -45,9 +45,22 @@ void setup()
 	WiFi.begin(ssid, password);
 	while (WiFi.status() != WL_CONNECTED)
 	{
+    digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
 		delay(500);
 		Serial.print(".");
 	}
+
+  //turn off LED
+  digitalWrite(LED_BUILTIN, false);
+
+  // blink 3 times fast (100ms interval)
+  for (int i = 0; i < 3; i++)
+  {
+    digitalWrite(LED_BUILTIN, true);
+    delay(100);
+    digitalWrite(LED_BUILTIN, false);
+    delay(100);
+  }
 
 	// Print information how to contact the camera server
 	IPAddress ip = WiFi.localIP();
