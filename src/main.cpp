@@ -43,7 +43,7 @@ void setup()
 	// Connect the WiFi
 	WiFi.mode(WIFI_STA);
 	WiFi.config(INADDR_NONE, INADDR_NONE, INADDR_NONE);
-	WiFi.setHostname(hostname.c_str());
+	WiFi.setHostname(hostname);
 	WiFi.begin(ssid, password);
 	while (WiFi.status() != WL_CONNECTED)
 	{
