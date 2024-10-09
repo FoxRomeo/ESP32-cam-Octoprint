@@ -68,7 +68,7 @@ void setup()
 	IPAddress ip = WiFi.localIP();
 	Serial.print("\nWiFi connected with IP ");
 	Serial.println(ip);
-	Serial.print("\or hostname ");
+	Serial.print("or hostname ");
 	Serial.println(WiFi.getHostname());
 	Serial.println();
 #ifdef ENABLE_WEBSERVER1
