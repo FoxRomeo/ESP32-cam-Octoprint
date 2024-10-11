@@ -42,31 +42,35 @@ void setup()
 
 	// Connect the WiFi
 	WiFi.mode(WIFI_STA);
+	WiFi.config(INADDR_NONE, INADDR_NONE, INADDR_NONE);
+	WiFi.setHostname(hostname);
 	WiFi.begin(ssid, password);
 	while (WiFi.status() != WL_CONNECTED)
 	{
-    digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
+		digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
 		delay(500);
 		Serial.print(".");
 	}
 
-  //turn off LED
-  digitalWrite(LED_BUILTIN, false);
+	//turn off LED
+	digitalWrite(LED_BUILTIN, false);
 
-  // blink 3 times fast (100ms interval)
-  for (int i = 0; i < 3; i++)
-  {
-    digitalWrite(LED_BUILTIN, true);
-    delay(100);
-    digitalWrite(LED_BUILTIN, false);
-    delay(100);
-  }
+	// blink 3 times fast (100ms interval)
+	for (int i = 0; i < 3; i++)
+	{
+		digitalWrite(LED_BUILTIN, true);
+		delay(100);
+		digitalWrite(LED_BUILTIN, false);
+		delay(100);
+	}
 
 	// Print information how to contact the camera server
 	IPAddress ip = WiFi.localIP();
 	Serial.print("\nWiFi connected with IP ");
 	Serial.println(ip);
-
+	Serial.print("or hostname ");
+	Serial.println(WiFi.getHostname());
+	Serial.println();
 #ifdef ENABLE_WEBSERVER1
 	Serial.print("Browser Stream Link: http://");
 	Serial.print(ip);
