@@ -44,12 +44,32 @@ void setup()
 	WiFi.mode(WIFI_STA);
 	WiFi.config(INADDR_NONE, INADDR_NONE, INADDR_NONE);
 	WiFi.setHostname(hostname);
-	WiFi.begin(ssid, password);
-	while (WiFi.status() != WL_CONNECTED)
-	{
-		digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
+
+	Serial.setDebugOutput(true);
+	WiFi.onEvent([](WiFiEvent_t event, WiFiEventInfo_t info) {
+		Serial.printf("WiFi event: %d\n", event);
+	});
+
+//	WiFi.begin(ssid, password);
+//	while (WiFi.status() != WL_CONNECTED)
+//	{
+//		digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
+//		delay(500);
+//		Serial.print(".");
+//	}
+
+// Wait for valid IP address
+	int attempts = 0;
+	while (WiFi.localIP().toString() == "255.255.255.255" && attempts < 20) {
 		delay(500);
 		Serial.print(".");
+		attempts++;
+	}
+
+	if (WiFi.localIP().toString() != "255.255.255.255") {
+		Serial.println("\nWiFi connected with IP " + WiFi.localIP().toString());
+	} else {
+		Serial.println("\nFailed to get IP address!");
 	}
 
 	//turn off LED
